@@ -11,7 +11,6 @@ storyblokInit({
   accessToken: process.env.STORYBLOK_PREVIEW_TOKEN,
   use: [apiPlugin],
   components: {
-    pre: (props) => <pre {...props} data-test="wat" />,
     feature: Feature,
     grid: Grid,
     teaser: Teaser,
