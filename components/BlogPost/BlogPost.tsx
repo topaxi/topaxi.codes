@@ -96,10 +96,10 @@ export const BlogPost = (props: BlogPostProps) => {
                 </Heading>
               );
             },
-            [NODE_CODEBLOCK](children, { class: className, ...props }) {
+            [NODE_CODEBLOCK](children: any, { class: className, ...props }) {
               return (
                 <CodeBlock className={className} {...props}>
-                  {children as string}
+                  {children[0] as string}
                 </CodeBlock>
               );
             },
