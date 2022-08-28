@@ -105,12 +105,9 @@ export const BlogPost = (props: BlogPostProps) => {
               }, []);
 
               return (
-                <pre className={className} {...props}>
-                  <chakra.code
-                    display="block"
-                    dangerouslySetInnerHTML={{ __html: code }}
-                  />
-                </pre>
+                <chakra.pre className={className} borderRadius="sm" {...props}>
+                  <code dangerouslySetInnerHTML={{ __html: code }} />
+                </chakra.pre>
               );
             },
           },
