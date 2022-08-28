@@ -1,8 +1,9 @@
-import { chakra, Container, Heading } from "@chakra-ui/react";
+import { chakra, Container, Heading, Link } from "@chakra-ui/react";
 import { storyblokEditable, StoryData } from "@storyblok/react";
 import Prism from "prismjs";
 import * as React from "react";
 import {
+  MARK_LINK,
   NODE_CODEBLOCK,
   NODE_HEADING,
   render,
@@ -54,6 +55,11 @@ export const BlogPost = (props: BlogPostProps) => {
       </Container>
       <Container as="section" {...storyblokEditable(blok)} sx={styles}>
         {render(blok.body, {
+          markResolvers: {
+            [MARK_LINK](children, props) {
+              return <Link {...props}>{children}</Link>;
+            },
+          },
           nodeResolvers: {
             [NODE_HEADING](children, props) {
               const { level, ...rest } = props;
