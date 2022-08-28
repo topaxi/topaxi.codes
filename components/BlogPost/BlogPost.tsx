@@ -7,6 +7,7 @@ import {
   NODE_HEADING,
   render,
 } from "storyblok-rich-text-react-renderer";
+import { CodeBlock } from "../CodeBlock";
 
 const dateFormatter = Intl.DateTimeFormat("en-UK", {
   dateStyle: "long",
@@ -96,18 +97,10 @@ export const BlogPost = (props: BlogPostProps) => {
               );
             },
             [NODE_CODEBLOCK](children, { class: className, ...props }) {
-              const code = React.useMemo(() => {
-                return Prism.highlight(
-                  (children as any)[0],
-                  Prism.languages.javascript,
-                  "javascript"
-                );
-              }, []);
-
               return (
-                <chakra.pre className={className} borderRadius="sm" {...props}>
-                  <code dangerouslySetInnerHTML={{ __html: code }} />
-                </chakra.pre>
+                <CodeBlock className={className} {...props}>
+                  {children as string}
+                </CodeBlock>
               );
             },
           },

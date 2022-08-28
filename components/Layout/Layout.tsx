@@ -1,11 +1,29 @@
-import { chakra, Box, Container, HTMLChakraProps } from "@chakra-ui/react";
-import Link from "next/link";
+import {
+  chakra,
+  Box,
+  Container,
+  HTMLChakraProps,
+  Link,
+} from "@chakra-ui/react";
+import NextLink from "next/link";
 
 function LinkToHome(props: HTMLChakraProps<"a">) {
   return (
-    <Link href="/" passHref>
+    <NextLink href="/" passHref>
       <chakra.a {...props}>topaxi.codes</chakra.a>
-    </Link>
+    </NextLink>
+  );
+}
+
+function NavItem(props: JSX.IntrinsicElements["a"]) {
+  const { href, ...rest } = props;
+
+  return (
+    <chakra.li _notLast={{ _after: { content: "' | '", whiteSpace: "pre" } }}>
+      <NextLink href={href!} passHref>
+        <Link {...rest} />
+      </NextLink>
+    </chakra.li>
   );
 }
 
@@ -19,10 +37,18 @@ export function Layout(props: LayoutProps) {
 
   return (
     <>
-      <Container as="header">
-        <Box as={Brand} mt={24} mb={10} fontSize="5rem">
+      <Container as="header" mt={24} mb={10}>
+        <Box as={Brand} fontSize="5rem">
           <LinkToHome />
         </Box>
+        <nav>
+          <chakra.ul display="flex" listStyleType="none">
+            <NavItem href="https://topaxi.ch/">Home</NavItem>
+            <NavItem href="https://topaxi.codes/">Blog</NavItem>
+            <NavItem href="https://cv.topaxi.ch/">CV</NavItem>
+            <NavItem href="https://topaxi.ch/about">About</NavItem>
+          </chakra.ul>
+        </nav>
       </Container>
       <main>{children}</main>
       <Container as="footer" mt={24}>
