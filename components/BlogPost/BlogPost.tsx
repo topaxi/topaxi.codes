@@ -1,6 +1,5 @@
-import { chakra, Container, Heading, Link } from "@chakra-ui/react";
+import { chakra, Container, Heading } from "@chakra-ui/react";
 import { storyblokEditable, StoryData } from "@storyblok/react";
-import Prism from "prismjs";
 import * as React from "react";
 import {
   MARK_LINK,
@@ -9,6 +8,7 @@ import {
   render,
 } from "storyblok-rich-text-react-renderer";
 import { CodeBlock } from "../CodeBlock";
+import { Link } from "../Link";
 
 const dateFormatter = Intl.DateTimeFormat("en-UK", {
   dateStyle: "long",
@@ -57,7 +57,13 @@ export const BlogPost = (props: BlogPostProps) => {
         {render(blok.body, {
           markResolvers: {
             [MARK_LINK](children, props) {
-              return <Link {...props}>{children}</Link>;
+              const { href, target } = props;
+
+              return (
+                <Link href={href} target={target}>
+                  {children}
+                </Link>
+              );
             },
           },
           nodeResolvers: {

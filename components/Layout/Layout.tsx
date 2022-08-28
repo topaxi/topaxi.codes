@@ -3,9 +3,10 @@ import {
   Box,
   Container,
   HTMLChakraProps,
-  Link,
+  Button,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { Link, LinkProps } from "../Link";
 
 function LinkToHome(props: HTMLChakraProps<"a">) {
   return (
@@ -15,14 +16,10 @@ function LinkToHome(props: HTMLChakraProps<"a">) {
   );
 }
 
-function NavItem(props: JSX.IntrinsicElements["a"]) {
-  const { href, ...rest } = props;
-
+function NavItem(props: LinkProps) {
   return (
     <chakra.li _notLast={{ _after: { content: "' | '", whiteSpace: "pre" } }}>
-      <NextLink href={href!} passHref>
-        <Link {...rest} />
-      </NextLink>
+      <Link {...props} />
     </chakra.li>
   );
 }
@@ -38,24 +35,35 @@ export function Layout(props: LayoutProps) {
   return (
     <>
       <Container as="header" mt={24} mb={10}>
-        <Box as={Brand} fontSize="5rem">
-          <LinkToHome />
-        </Box>
-        <nav>
+        <chakra.nav position="relative" zIndex="1">
           <chakra.ul display="flex" listStyleType="none">
             <NavItem href="https://topaxi.ch/">Home</NavItem>
             <NavItem href="https://topaxi.codes/">Blog</NavItem>
             <NavItem href="https://cv.topaxi.ch/">CV</NavItem>
             <NavItem href="https://topaxi.ch/about">About</NavItem>
           </chakra.ul>
-        </nav>
+        </chakra.nav>
+        <Box as={Brand} fontSize="5rem" lineHeight="1">
+          <LinkToHome />
+        </Box>
       </Container>
       <main>{children}</main>
-      <Container as="footer" mt={24}>
-        <LinkToHome fontWeight="bold" />{" "}
-        <chakra.span color="gray.500" fontSize="sm">
-          &copy; {new Date().getUTCFullYear()}
-        </chakra.span>
+      <Container as="footer" mt={24} display="flex">
+        <div>
+          <LinkToHome fontWeight="bold" />{" "}
+          <chakra.span color="gray.500" fontSize="sm">
+            &copy; {new Date().getUTCFullYear()}
+          </chakra.span>
+        </div>
+        <Button
+          variant="unstyled"
+          ml="auto"
+          title="Back to top"
+          aria-label="Back to top"
+          onClick={() => window.scrollTo({ top: 0 })}
+        >
+          ^
+        </Button>
       </Container>
     </>
   );
