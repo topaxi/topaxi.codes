@@ -1,4 +1,4 @@
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme, withDefaultSize } from "@chakra-ui/react";
 import { storyblokInit, apiPlugin } from "@storyblok/react";
 import type { AppProps } from "next/app";
 import { BlogPost } from "../components/BlogPost";
@@ -25,6 +25,13 @@ const theme = extendTheme({
     heading: '"PT Sans", sans-serif',
     body: '"PT Sans", sans-serif',
     mono: '"Fira Code", monospace',
+  },
+  components: {
+    Container: {
+      baseStyle: {
+        maxW: ["container.sm", null, "container.md", null, "container.lg"],
+      },
+    },
   },
 });
 

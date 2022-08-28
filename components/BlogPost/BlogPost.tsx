@@ -1,7 +1,7 @@
 import { chakra, Container, Heading } from "@chakra-ui/react";
 import { storyblokEditable, StoryData } from "@storyblok/react";
 import Prism from "prismjs";
-import { useMemo } from "react";
+import * as React from "react";
 import {
   NODE_CODEBLOCK,
   NODE_HEADING,
@@ -66,8 +66,25 @@ export const BlogPost = (props: BlogPostProps) => {
                 6: "xs",
               } as const;
 
+              function slugify(children: React.ReactNode): string {
+                return React.Children.toArray(children)
+                  .map((v) => {
+                    if (typeof v === "string") {
+                      return v.toLowerCase().replace(/[^\w\d]/g, "");
+                    }
+
+                    if (typeof v === "number") {
+                      return String(v);
+                    }
+
+                    return "";
+                  })
+                  .join("");
+              }
+
               return (
                 <Heading
+                  id={slugify(children)}
                   as={`h${level}`}
                   size={sizeMap[level]}
                   mt="1em"
@@ -78,10 +95,10 @@ export const BlogPost = (props: BlogPostProps) => {
                 </Heading>
               );
             },
-            [NODE_CODEBLOCK]([children], { class: className, ...props }) {
-              const code = useMemo(() => {
+            [NODE_CODEBLOCK](children, { class: className, ...props }) {
+              const code = React.useMemo(() => {
                 return Prism.highlight(
-                  children,
+                  (children as any)[0],
                   Prism.languages.javascript,
                   "javascript"
                 );
