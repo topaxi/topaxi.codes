@@ -9,6 +9,7 @@ import {
 } from "storyblok-rich-text-react-renderer";
 import { CodeBlock } from "../CodeBlock";
 import { Link } from "../Link";
+import { TagList } from "../TagList/TagList";
 
 const dateFormatter = Intl.DateTimeFormat("en-UK", {
   dateStyle: "long",
@@ -40,21 +41,18 @@ export const BlogPost = (props: BlogPostProps) => {
           <time dateTime={story.published_at!}>
             {dateFormatter.format(new Date(story.published_at!))}
           </time>{" "}
-          on{" "}
-          <chakra.ul listStyleType="none" display="inline-flex">
-            {story.tag_list.map((tag) => (
-              <chakra.li
-                key={tag}
-                _notLast={{ _after: { content: "', '", whiteSpace: "pre" } }}
-              >
-                <a>{tag}</a>
-              </chakra.li>
-            ))}
-          </chakra.ul>
+          on <TagList tags={story.tag_list} />
         </section>
       </Container>
       <Container as="section" {...storyblokEditable(blok)} sx={styles}>
         {render(blok.body, {
+          blokResolvers: {
+            htmlsnippet(props) {
+              const { code } = props;
+
+              return <div dangerouslySetInnerHTML={{ __html: code }} />;
+            },
+          },
           markResolvers: {
             [MARK_LINK](children, props) {
               const { href, target } = props;

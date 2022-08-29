@@ -16,14 +16,11 @@ interface BlogPostProps {
 export const getStaticProps: GetStaticProps<BlogPostProps> = async (ctx) => {
   const { slug } = ctx.params ?? {};
 
-  // load the draft version
-  let sbParams = {
-    version: "draft", // or 'published'
-  };
-
   const storyblokApi = getStoryblokApi();
 
-  let { data } = await storyblokApi.get(`cdn/stories/${slug}`, sbParams);
+  let { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
+    version: "published", // 'draft' or 'published'
+  });
 
   return {
     notFound: data?.story == null,
