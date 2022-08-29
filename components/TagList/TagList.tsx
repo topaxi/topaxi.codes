@@ -15,7 +15,7 @@ export function TagList(props: TagListProps): JSX.Element {
           key={tag}
           _notLast={{ _after: { content: "', '", whiteSpace: "pre" } }}
         >
-          <Link href={`/tag/${tag.toLowerCase()}`}>{tag}</Link>
+          <Link href={`/tag/${tag}`}>{tag}</Link>
         </chakra.li>
       ))}
     </chakra.ul>

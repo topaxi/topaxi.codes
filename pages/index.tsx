@@ -1,20 +1,19 @@
-import { Container, Heading } from "@chakra-ui/react";
-import { getStoryblokApi } from "@storyblok/react";
+import { Container } from "@chakra-ui/react";
+import { getStoryblokApi, StoryData } from "@storyblok/react";
 import type { GetStaticProps, NextPage } from "next";
+import { BlogPostListItem } from "../components/BlogPostListItem";
 import { Layout } from "../components/Layout";
-import { Link } from "../components/Link";
-import { TagList } from "../components/TagList/TagList";
 
 export interface IndexPageProps {
-  stories: any[];
+  stories: StoryData[];
 }
 
 export const getStaticProps: GetStaticProps<IndexPageProps> = async () => {
   const storyblokApi = getStoryblokApi();
 
-  let { data } = await storyblokApi.get(`cdn/stories/`);
-
-  console.log(data);
+  let { data } = await storyblokApi.get(`cdn/stories/`, {
+    sort_by: "first_published_at:desc",
+  });
 
   return {
     notFound: data?.stories == null && data?.stories.length === 0,
@@ -25,10 +24,6 @@ export const getStaticProps: GetStaticProps<IndexPageProps> = async () => {
   };
 };
 
-const dateFormatter = Intl.DateTimeFormat("en-UK", {
-  dateStyle: "long",
-});
-
 const IndexPage: NextPage<IndexPageProps> = (props) => {
   const { stories } = props;
 
@@ -36,23 +31,7 @@ const IndexPage: NextPage<IndexPageProps> = (props) => {
     <Layout brandComponent="h1">
       <Container>
         {stories.map((story) => (
-          <article key={story.id}>
-            <header>
-              <Heading size="lg">
-                <Link href={story.full_slug}>{story.name}</Link>
-              </Heading>
-            </header>
-            <footer>
-              {story.tag_list.length !== 0 && (
-                <>
-                  on <TagList tags={story.tag_list} />{" "}
-                </>
-              )}
-              <time dateTime={story.published_at!}>
-                {dateFormatter.format(new Date(story.published_at!))}
-              </time>
-            </footer>
-          </article>
+          <BlogPostListItem key={story.id} story={story} _notLast={{ mb: 6 }} />
         ))}
       </Container>
     </Layout>

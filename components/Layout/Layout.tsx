@@ -19,7 +19,22 @@ function LinkToHome(props: HTMLChakraProps<"a">) {
 function NavItem(props: LinkProps) {
   return (
     <chakra.li _notLast={{ _after: { content: "' | '", whiteSpace: "pre" } }}>
-      <Link {...props} />
+      <Link
+        {...props}
+        _disabled={{
+          opacity: 0.5,
+          cursor: "not-allowed",
+          textDecor: "none",
+        }}
+        onClick={(e) => {
+          if (
+            (e.target as HTMLAnchorElement).getAttribute("aria-disabled") ===
+            "true"
+          ) {
+            e.preventDefault();
+          }
+        }}
+      />
     </chakra.li>
   );
 }
@@ -37,10 +52,14 @@ export function Layout(props: LayoutProps) {
       <Container as="header" mt={24} mb={10}>
         <chakra.nav position="relative" zIndex="1">
           <chakra.ul display="flex" listStyleType="none">
-            <NavItem href="https://topaxi.ch/">Home</NavItem>
-            <NavItem href="https://topaxi.codes/">Blog</NavItem>
+            <NavItem href="https://topaxi.ch/" aria-disabled="true">
+              Home
+            </NavItem>
+            <NavItem href="/">Blog</NavItem>
             <NavItem href="https://cv.topaxi.ch/">CV</NavItem>
-            <NavItem href="https://topaxi.ch/about">About</NavItem>
+            <NavItem href="https://topaxi.ch/about" aria-disabled="true">
+              About
+            </NavItem>
           </chakra.ul>
         </chakra.nav>
         <Box as={Brand} fontSize="5rem" lineHeight="1">

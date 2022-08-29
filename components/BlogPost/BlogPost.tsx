@@ -38,10 +38,15 @@ export const BlogPost = (props: BlogPostProps) => {
       <Container as="header" mb={10}>
         <Heading as="h1">{story.name}</Heading>
         <section>
-          <time dateTime={story.published_at!}>
-            {dateFormatter.format(new Date(story.published_at!))}
-          </time>{" "}
-          on <TagList tags={story.tag_list} />
+          <time dateTime={story.first_published_at!}>
+            {dateFormatter.format(new Date(story.first_published_at!))}
+          </time>
+          {story.tag_list.length !== 0 && (
+            <>
+              {" "}
+              on <TagList tags={story.tag_list} />
+            </>
+          )}
         </section>
       </Container>
       <Container as="section" {...storyblokEditable(blok)} sx={styles}>
@@ -50,7 +55,9 @@ export const BlogPost = (props: BlogPostProps) => {
             htmlsnippet(props) {
               const { code } = props;
 
-              return <div dangerouslySetInnerHTML={{ __html: code }} />;
+              return (
+                <div dangerouslySetInnerHTML={{ __html: code as string }} />
+              );
             },
           },
           markResolvers: {

@@ -14,12 +14,13 @@ interface BlogPostProps {
 }
 
 export const getStaticProps: GetStaticProps<BlogPostProps> = async (ctx) => {
-  const { slug } = ctx.params ?? {};
+  const { preview, params } = ctx;
+  const { slug } = params ?? {};
 
   const storyblokApi = getStoryblokApi();
 
   let { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
-    version: "published", // 'draft' or 'published'
+    version: preview ? "draft" : "published",
   });
 
   return {
