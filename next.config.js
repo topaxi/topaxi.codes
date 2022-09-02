@@ -10,6 +10,23 @@ const nextConfig = {
   experimental: {
     serverComponents: false,
   },
+
+  async rewrites() {
+    return Promise.resolve({
+      beforeFiles: [],
+      afterFiles: [
+        {
+          source: "/sitemap.xml",
+          destination: "/api/sitemap",
+        },
+        {
+          source: "/sitemap/:type.xml",
+          destination: "/api/sitemap/:type",
+        },
+      ],
+      fallback: [],
+    });
+  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);
