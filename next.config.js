@@ -1,6 +1,6 @@
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-});
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -16,17 +16,17 @@ const nextConfig = {
       beforeFiles: [],
       afterFiles: [
         {
-          source: "/sitemap.xml",
-          destination: "/api/sitemap",
+          source: '/sitemap.xml',
+          destination: '/api/sitemap',
         },
         {
-          source: "/sitemap/:type.xml",
-          destination: "/api/sitemap/:type",
+          source: '/sitemap/:type.xml',
+          destination: '/api/sitemap/:type',
         },
       ],
       fallback: [],
-    });
+    })
   },
-};
+}
 
-module.exports = withBundleAnalyzer(nextConfig);
+module.exports = withBundleAnalyzer(nextConfig)

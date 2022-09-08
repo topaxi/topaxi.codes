@@ -1,4 +1,4 @@
-import { storyblokEditable, StoryblokComponent } from "@storyblok/react";
+import { storyblokEditable, StoryblokComponent } from '@storyblok/react'
 
 export const Grid = ({ blok }: { blok: any }) => {
   return (
@@ -7,5 +7,5 @@ export const Grid = ({ blok }: { blok: any }) => {
         <StoryblokComponent blok={nestedBlok} key={nestedBlok._uid} />
       ))}
     </div>
-  );
-};
+  )
+}

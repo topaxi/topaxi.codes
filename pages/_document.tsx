@@ -1,4 +1,4 @@
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 const styles = `
 :root {
@@ -8,7 +8,7 @@ const styles = `
 pre, code {
   font-family: 'Fira Code', sans-serif;
 }
-`;
+`
 
 class MyDocument extends Document {
   render() {
@@ -30,8 +30,8 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }
 
-export default MyDocument;
+export default MyDocument

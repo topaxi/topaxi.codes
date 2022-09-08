@@ -4,48 +4,48 @@ import {
   Container,
   HTMLChakraProps,
   Button,
-} from "@chakra-ui/react";
-import NextLink from "next/link";
-import { Link, LinkProps } from "../Link";
+} from '@chakra-ui/react'
+import NextLink from 'next/link'
+import { Link, LinkProps } from '../Link'
 
-function LinkToHome(props: HTMLChakraProps<"a">) {
+function LinkToHome(props: HTMLChakraProps<'a'>) {
   return (
     <NextLink href="/" passHref>
       <chakra.a {...props}>topaxi.codes</chakra.a>
     </NextLink>
-  );
+  )
 }
 
 function NavItem(props: LinkProps) {
   return (
-    <chakra.li _notLast={{ _after: { content: "' | '", whiteSpace: "pre" } }}>
+    <chakra.li _notLast={{ _after: { content: "' | '", whiteSpace: 'pre' } }}>
       <Link
         {...props}
         _disabled={{
           opacity: 0.5,
-          cursor: "not-allowed",
-          textDecor: "none",
+          cursor: 'not-allowed',
+          textDecor: 'none',
         }}
         onClick={(e) => {
           if (
-            (e.target as HTMLAnchorElement).getAttribute("aria-disabled") ===
-            "true"
+            (e.target as HTMLAnchorElement).getAttribute('aria-disabled') ===
+            'true'
           ) {
-            e.preventDefault();
+            e.preventDefault()
           }
         }}
       />
     </chakra.li>
-  );
+  )
 }
 
 export interface LayoutProps {
-  brandComponent?: React.ComponentType | keyof JSX.IntrinsicElements;
-  children: React.ReactNode;
+  brandComponent?: React.ComponentType | keyof JSX.IntrinsicElements
+  children: React.ReactNode
 }
 
 export function Layout(props: LayoutProps) {
-  const { children, brandComponent: Brand = "div" } = props;
+  const { children, brandComponent: Brand = 'div' } = props
 
   return (
     <>
@@ -69,7 +69,7 @@ export function Layout(props: LayoutProps) {
       <main>{children}</main>
       <Container as="footer" mt={24} display="flex">
         <div>
-          <LinkToHome fontWeight="bold" />{" "}
+          <LinkToHome fontWeight="bold" />{' '}
           <chakra.span color="gray.500" fontSize="sm">
             &copy; {new Date().getUTCFullYear()}
           </chakra.span>
@@ -85,5 +85,5 @@ export function Layout(props: LayoutProps) {
         </Button>
       </Container>
     </>
-  );
+  )
 }
