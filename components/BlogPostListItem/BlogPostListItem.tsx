@@ -18,7 +18,7 @@ export function BlogPostListItem(props: BlogPostListItemProps) {
     <chakra.article {...rest}>
       <header>
         <Heading size="lg">
-          <Link href={`/${story.full_slug}`}>{story.name}</Link>
+          <Link href={`/${story.full_slug}`} prefetch={false}>{story.name}</Link>
         </Heading>
       </header>
       <footer>

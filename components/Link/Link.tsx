@@ -6,6 +6,7 @@ import NextLink, { LinkProps as NextLinkProps } from 'next/link'
 
 export interface LinkProps extends Omit<ChakraLinkProps, 'href'> {
   href?: NextLinkProps['href']
+  prefetch?: NextLinkProps['prefetch']
 }
 
 export const Link = (props: LinkProps) => {
