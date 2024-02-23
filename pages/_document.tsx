@@ -24,6 +24,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
           <style dangerouslySetInnerHTML={{ __html: styles }}></style>
+          <link rel="me" href="https://toot.cafe/@topaxi" />
         </Head>
         <body>
           <Main />
