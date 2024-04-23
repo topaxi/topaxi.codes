@@ -28,6 +28,12 @@ export default async function sitemaptags(
 
   let { data } = await storyblokApi.get(`cdn/tags/`)
 
+  if (!data) {
+    res.status(404).end()
+
+    return
+  }
+
   res.setHeader('Content-Type', 'application/xml').status(200)
 
   res.write(`<?xml version="1.0" encoding="UTF-8"?>\n`)
@@ -36,7 +42,7 @@ export default async function sitemaptags(
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n`
   )
 
-  for (let entry of data?.tags.map(mapToEntry(baseUrl))) {
+  for (let entry of data.tags.map(mapToEntry(baseUrl))) {
     res.write(renderEntry(entry))
   }
 

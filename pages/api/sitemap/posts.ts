@@ -26,6 +26,12 @@ export default async function sitemapposts(
     sort_by: 'first_published_at:desc',
   })
 
+  if (!data) {
+    res.status(404).end()
+
+    return
+  }
+
   res.setHeader('Content-Type', 'application/xml').status(200)
 
   res.write(`<?xml version="1.0" encoding="UTF-8"?>\n`)
@@ -34,7 +40,7 @@ export default async function sitemapposts(
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n`
   )
 
-  for (let entry of data?.stories.map(mapToEntry(baseUrl))) {
+  for (let entry of data.stories.map(mapToEntry(baseUrl))) {
     res.write(renderEntry(entry))
   }
 

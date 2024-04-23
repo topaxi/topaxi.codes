@@ -88,7 +88,7 @@ export const BlogPost = (props: BlogPostProps) => {
                 return React.Children.toArray(children)
                   .map((v) => {
                     if (typeof v === 'string') {
-                      return v.toLowerCase().replace(/[^\w\d]/g, '')
+                      return v.toLowerCase().replace(/[^\w]/g, '')
                     }
 
                     if (typeof v === 'number') {
