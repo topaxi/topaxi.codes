@@ -20,7 +20,7 @@ export const getStaticProps: GetStaticProps<BlogPostProps> = async (ctx) => {
   const storyblokApi = getStoryblokApi()
 
   let { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
-    version: preview ? 'draft' : 'published',
+    version: preview || true ? 'draft' : 'published',
   })
 
   return {

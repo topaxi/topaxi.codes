@@ -3,7 +3,8 @@ import {
   BlockTypes,
   ISbStoryData,
   MarkTypes,
-  storyblokEditable,
+SbBlokData,
+storyblokEditable,
   StoryblokRichTextNode,
   useStoryblokRichText,
 } from '@storyblok/react'
@@ -11,6 +12,7 @@ import * as React from 'react'
 import { CodeBlock } from '../CodeBlock'
 import { Link } from '../Link'
 import { TagList } from '../TagList/TagList'
+import { Quiz } from '../Quiz'
 
 const dateFormatter = Intl.DateTimeFormat('en-UK', {
   dateStyle: 'long',
@@ -36,7 +38,7 @@ type RenderFn = (
 
 export interface BlogPostProps {
   story: ISbStoryData
-  blok: any
+  blok: SbBlokData
 }
 
 function slugify(node: StoryblokRichTextNode<React.ReactElement>): string {
@@ -98,8 +100,13 @@ export const BlogPost = (props: BlogPostProps) => {
         return h(Link, { href, target }, node.text as React.ReactNode)
       },
       [BlockTypes.COMPONENT]: (node, context) => {
+        const h = context.render as RenderFn
         const blok = node.attrs?.body?.[0]
         if (!blok) return context.render('span', {})
+        if (blok.component === 'quiz') {
+          const { _uid, _editable, ...rest } = blok
+          return h(Quiz, { ...rest, ...storyblokEditable(blok) })
+        }
         if (blok.component === 'htmlsnippet') {
           return context.render('div', {
             dangerouslySetInnerHTML: { __html: blok.code as string },
@@ -127,7 +134,7 @@ export const BlogPost = (props: BlogPostProps) => {
         </section>
       </Container>
       <Container as="section" {...storyblokEditable(blok)} sx={styles}>
-        {render(blok.body)}
+        {render(blok.body as any)}
       </Container>
     </article>
   )
