@@ -4,15 +4,16 @@ import {
   Container,
   HTMLChakraProps,
   Button,
+  Link as ChakraLink,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { Link, LinkProps } from '../Link'
 
 function LinkToHome(props: HTMLChakraProps<'a'>) {
   return (
-    <NextLink href="/" passHref>
-      <chakra.a {...props}>topaxi.codes</chakra.a>
-    </NextLink>
+    <ChakraLink as={NextLink} href="/" {...props}>
+      topaxi.codes
+    </ChakraLink>
   )
 }
 
