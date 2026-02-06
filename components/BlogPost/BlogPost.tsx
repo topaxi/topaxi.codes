@@ -90,7 +90,7 @@ export const BlogPost = (props: BlogPostProps) => {
 
         return (
           <Link href={href} target={target}>
-            {node.children}
+            {node.text}
           </Link>
         )
       },
