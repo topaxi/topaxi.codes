@@ -41,9 +41,11 @@ const theme = extendTheme({
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const { key, ...rest } = pageProps
+
   return (
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <Component key={key ?? undefined} {...rest} />
     </ChakraProvider>
   )
 }

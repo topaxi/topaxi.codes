@@ -26,6 +26,14 @@ const styles = {
   },
 }
 
+// The library types context.render as (tag: string, ...) but at runtime
+// it delegates to React.createElement which accepts component references.
+type RenderFn = (
+  tag: string | React.ComponentType<any>,
+  attrs?: Record<string, any>,
+  children?: React.ReactNode,
+) => React.ReactElement
+
 export interface BlogPostProps {
   story: ISbStoryData
   blok: any
@@ -49,8 +57,9 @@ export const BlogPost = (props: BlogPostProps) => {
 
   const { render } = useStoryblokRichText({
     resolvers: {
-      [BlockTypes.HEADING]: (node) => {
-        const { level, ...rest } = node.attrs ?? {}
+      [BlockTypes.HEADING]: (node, context) => {
+        const h = context.render as RenderFn
+        const { level } = node.attrs ?? {}
 
         const sizeMap = {
           1: 'xl',
@@ -61,50 +70,42 @@ export const BlogPost = (props: BlogPostProps) => {
           6: 'xs',
         } as const
 
-        return (
-          <Heading
-            id={slugify(node)}
-            as={`h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'}
-            size={sizeMap[level as keyof typeof sizeMap]}
-            mt="1em"
-            mb="0.5em"
-            {...rest}
-          >
-            {node.children}
-          </Heading>
+        return h(
+          Heading,
+          {
+            id: slugify(node),
+            as: `h${level}`,
+            size: sizeMap[level as keyof typeof sizeMap],
+            mt: '1em',
+            mb: '0.5em',
+          },
+          node.children,
         )
       },
-      [BlockTypes.CODE_BLOCK]: (node) => {
-        const { class: className, ...rest } = node.attrs ?? {}
+      [BlockTypes.CODE_BLOCK]: (node, context) => {
+        const h = context.render as RenderFn
+        const { class: className } = node.attrs ?? {}
         const code =
           node.content?.map((child) => child.text ?? '').join('') ?? ''
 
-        return (
-          <CodeBlock className={className} {...rest}>
-            {code}
-          </CodeBlock>
-        )
+        return h(CodeBlock, { className }, code)
       },
-      [MarkTypes.LINK]: (node) => {
+      [MarkTypes.LINK]: (node, context) => {
+        const h = context.render as RenderFn
+
         const { href, target } = node.attrs ?? {}
 
-        return (
-          <Link href={href} target={target}>
-            {node.text}
-          </Link>
-        )
+        return h(Link, { href, target }, node.text as React.ReactNode)
       },
-      [BlockTypes.COMPONENT]: (node) => {
+      [BlockTypes.COMPONENT]: (node, context) => {
         const blok = node.attrs?.body?.[0]
-        if (!blok) return <></>
+        if (!blok) return context.render('span', {})
         if (blok.component === 'htmlsnippet') {
-          return (
-            <div
-              dangerouslySetInnerHTML={{ __html: blok.code as string }}
-            />
-          )
+          return context.render('div', {
+            dangerouslySetInnerHTML: { __html: blok.code as string },
+          })
         }
-        return <></>
+        return context.render('span', {})
       },
     },
   })
