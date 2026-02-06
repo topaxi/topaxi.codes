@@ -10,7 +10,7 @@ export interface LinkProps extends Omit<ChakraLinkProps, 'href'> {
 }
 
 export const Link = (props: LinkProps) => {
-  const { href, ...rest } = props
+  const { href, prefetch, ...rest } = props
 
   if (href === undefined) {
     return <ChakraLink {...rest} />
@@ -18,7 +18,7 @@ export const Link = (props: LinkProps) => {
 
   return (
     <NextLink href={href} passHref>
-      <ChakraLink {...rest} />
+      <ChakraLink {...rest} prefetch={prefetch ? String(prefetch) : undefined} />
     </NextLink>
   )
 }
