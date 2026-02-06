@@ -1,13 +1,17 @@
 import {
   getStoryblokApi,
+  setComponents,
   StoryblokComponent,
   ISbStoryData,
   useStoryblokState,
 } from '@storyblok/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { BlogPost as BlogPostComponent } from '../components/BlogPost'
 import { Layout } from '../components/Layout'
 
 import 'prismjs/themes/prism-tomorrow.min.css'
+
+setComponents({ blogpost: BlogPostComponent })
 
 interface BlogPostProps {
   story: ISbStoryData

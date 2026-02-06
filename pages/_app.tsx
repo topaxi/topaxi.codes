@@ -1,17 +1,10 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { storyblokInit, apiPlugin } from '@storyblok/react'
 import type { AppProps } from 'next/app'
-import dynamic from 'next/dynamic'
 import { Feature } from '../components/Feature'
 import { Grid } from '../components/Grid'
 import { Page } from '../components/Page'
 import { Teaser } from '../components/Teaser'
-
-const BlogPost = dynamic(() =>
-  import('../components/BlogPost').then(({ BlogPost }) => ({
-    default: BlogPost,
-  }))
-)
 
 storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_PREVIEW_TOKEN,
@@ -21,7 +14,6 @@ storyblokInit({
     grid: Grid,
     teaser: Teaser,
     page: Page,
-    blogpost: BlogPost,
   },
 })
 
