@@ -1,9 +1,9 @@
-import { getStoryblokApi, StoryData } from '@storyblok/react'
+import { getStoryblokApi, ISbStoryData } from '@storyblok/react'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { renderEntry, SitemapEntry } from '../../../utils/sitemap'
 
 function mapToEntry(baseUrl: string) {
-  return (story: StoryData): SitemapEntry => {
+  return (story: ISbStoryData): SitemapEntry => {
     return {
       loc: `${baseUrl}/${story.slug}`,
       lastmod: story.published_at,

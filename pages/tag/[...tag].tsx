@@ -1,11 +1,11 @@
 import { Container } from '@chakra-ui/react'
-import { getStoryblokApi, StoryData } from '@storyblok/react'
+import { getStoryblokApi, ISbStoryData } from '@storyblok/react'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { BlogPostListItem } from '../../components/BlogPostListItem'
 import { Layout } from '../../components/Layout'
 
 export interface TagPageProps {
-  stories: StoryData[]
+  stories: ISbStoryData[]
 }
 
 export const getStaticProps: GetStaticProps<TagPageProps> = async (ctx) => {
@@ -14,7 +14,7 @@ export const getStaticProps: GetStaticProps<TagPageProps> = async (ctx) => {
 
   let { data } = await storyblokApi.get(`cdn/stories/`, {
     sort_by: 'first_published_at:desc',
-    with_tag: tag,
+    with_tag: Array.isArray(tag) ? tag.join(',') : tag,
   })
 
   return {

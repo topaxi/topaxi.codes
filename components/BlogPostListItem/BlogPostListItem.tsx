@@ -1,5 +1,5 @@
 import { chakra, Heading, HTMLChakraProps } from '@chakra-ui/react'
-import { StoryData } from '@storyblok/react'
+import { ISbStoryData } from '@storyblok/react'
 import { Link } from '../Link'
 import { TagList } from '../TagList'
 
@@ -8,7 +8,7 @@ const dateFormatter = Intl.DateTimeFormat('en-UK', {
 })
 
 export interface BlogPostListItemProps extends HTMLChakraProps<'article'> {
-  story: StoryData
+  story: ISbStoryData
 }
 
 export function BlogPostListItem(props: BlogPostListItemProps) {

@@ -5,11 +5,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
-
-  experimental: {
-    serverComponents: false,
-  },
 
   async rewrites() {
     return Promise.resolve({

@@ -1,11 +1,11 @@
 import { Container } from '@chakra-ui/react'
-import { getStoryblokApi, StoryData } from '@storyblok/react'
+import { getStoryblokApi, ISbStoryData } from '@storyblok/react'
 import type { GetStaticProps, NextPage } from 'next'
 import { BlogPostListItem } from '../components/BlogPostListItem'
 import { Layout } from '../components/Layout'
 
 export interface IndexPageProps {
-  stories: StoryData[]
+  stories: ISbStoryData[]
 }
 
 export const getStaticProps: GetStaticProps<IndexPageProps> = async () => {

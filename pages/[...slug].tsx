@@ -1,7 +1,7 @@
 import {
   getStoryblokApi,
   StoryblokComponent,
-  StoryData,
+  ISbStoryData,
   useStoryblokState,
 } from '@storyblok/react'
 import { GetStaticPaths, GetStaticProps } from 'next'
@@ -10,7 +10,7 @@ import { Layout } from '../components/Layout'
 import 'prismjs/themes/prism-tomorrow.min.css'
 
 interface BlogPostProps {
-  story: StoryData
+  story: ISbStoryData
 }
 
 export const getStaticProps: GetStaticProps<BlogPostProps> = async (ctx) => {
@@ -60,6 +60,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 function BlogPost(props: BlogPostProps) {
   const story = useStoryblokState(props.story)
+
+  if (!story) return null
 
   return (
     <Layout>
